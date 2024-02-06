@@ -1,5 +1,8 @@
 import { check, validationResult} from 'express-validator'
+import { generaId } from '../helpers/tokens.js'
 import Usuario from '../models/Usuario.js'
+import { emailRegistro } from '../helpers/emails.js'
+
 
 //fromulario para logearse
 const fromularioLogin = (req,res) =>{
@@ -43,10 +46,56 @@ const registrar = async (req, res) =>{
         })
     }
 
+    const {nombre, email, password} = req.body
 
-    const usuario = await Usuario.create(req.body)
+    //verificamos si el usuario ya esta registrado
+    const existeUsurio = await Usuario.findOne( { where : { email }} )
+    if(existeUsurio){
+        return res.render('auth/registro', {
+            pagina: 'Crear Cuenta',
+            errores: [{msg: 'El usuario ya existe'}],
+            usuario: {
+                nombre: req.body.nombre,
+                email: req.body.email
+            }
+        })
+    }
+
+   
+    console.log(existeUsurio)
+    // return;
+
+
+    const usuario = await Usuario.create({
+        nombre,
+        email,
+        password,
+        token: generaId()
+    })
+
+    //Envia email de confirmacion
+    emailRegistro({
+        nombre: usuario.nombre,
+        email: usuario.email,
+        token: usuario.token
+    })
+    //usuario creado
+
+    res.render('templates/mensaje',{
+        pagina:'Cuenta Creada con Exito',
+        mensaje: 'Hemos enviado un correo de confirmacion a tu cuenta'
+    })
 
 }
+
+//funcion que comprueba una cuenta
+
+const confirmar = (req, res) =>{
+    const {token} = req.params;
+    console.log( token )
+
+}
+
 //formulario para recuperar contrasenia
 
 const fromularioOlvidePassword = (req,res) =>{
@@ -60,5 +109,6 @@ export {
     fromularioLogin,
     fromularioRegistro,
     fromularioOlvidePassword,
+    confirmar,
     registrar
 }
