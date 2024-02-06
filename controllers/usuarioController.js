@@ -19,17 +19,33 @@ const registrar = async (req, res) =>{
 //validacion
     //nombre
     await check('nombre').notEmpty().withMessage('El nombre no puede ir vacio').run(req)
-    await check('email').isEmail.withMessage('Eso no parece un email').run(req)
+    await check('email').isEmail().withMessage('Eso no parece un email').run(req)
     await check('password').isLength({min: 6}).withMessage('El password debe de ser almenos de 6 caracteres').run(req)
-    await check('repetir-password').equals('password').withMessage('Los passwords no son iguales').run(req)
+    // await check('repetir-password').equals(req.body.password).withMessage('Los passwords no son iguales').run(req)
+
+
     let resultado = validationResult(req)
-    // verificar resultado vacio
-    
-    res.json(resultado.array())
-    
+
+
+    // return res.json(
+    //     resultado.array
+    // )
+
+    if(!resultado.isEmpty()){
+
+        return res.render('auth/registro', {
+            pagina: 'Crear Cuenta',
+            errores: resultado.array(),
+            usuario: {
+                nombre: req.body.nombre,
+                email: req.body.email
+            }
+        })
+    }
+
+
     const usuario = await Usuario.create(req.body)
 
-    res.json(usuario)
 }
 //formulario para recuperar contrasenia
 
