@@ -1,8 +1,9 @@
 // const express = require('express')
 import express from 'express'
-import csrf from 'csurf'
+import csurf from 'csurf'
 import cookieParser from 'cookie-parser'
 import usuarioRoutes from './routes/usuarioRoutes.js'
+import propiedadesRoutes from './routes/propiedadesRoutes.js'
 import db from './config/db.js'
 
 //create app
@@ -19,7 +20,7 @@ app.use( cookieParser() )
 
 //Habilitar CSRF
 
-app.use( csrf({cookie:true}))
+app.use( csurf({cookie:true}))
 
 //conxion bd
 try {
@@ -42,6 +43,8 @@ app.use( express.static('public') )
 //Routing
 
 app.use('/auth', usuarioRoutes)
+
+app.use('/', propiedadesRoutes)
 
 
 
