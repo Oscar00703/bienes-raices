@@ -7,8 +7,17 @@ const admin = (req,res) =>{
     })
 
 }
+//form para crear una nueva propiedad
+
+const crear = (req,res) =>{
+    res.render('propiedades/crear', {
+        pagina: 'Crear Propiedades',
+        barra:true
+    })
+}
 
 
 export{
-    admin
+    admin,
+    crear
 }
