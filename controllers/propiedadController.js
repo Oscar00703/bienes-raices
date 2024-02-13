@@ -12,7 +12,7 @@ const admin = (req,res) =>{
 const crear = (req,res) =>{
     res.render('propiedades/crear', {
         pagina: 'Crear Propiedades',
-        barra:true
+        barra:true 
     })
 }
 
