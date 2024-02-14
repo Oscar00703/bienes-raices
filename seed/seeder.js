@@ -17,7 +17,11 @@ const importarDatos = async () =>{
 
         //Inertar Datos
 
-        await Categoria.bulkCreate(categorias);
+        await Promise.all([
+            Categoria.bulkCreate(categorias),
+            Precio.bulkCreate(precios)
+        ])
+
         console.log('Datos exportados Correctamente');
         exit();
         
@@ -27,34 +31,9 @@ const importarDatos = async () =>{
     }
 }
 
-const importarPrecios = async() =>{
-    try {
-        
-        //Autenticar
 
-        await db.authenticate();
-
-        //Generar las columnas
-
-        await db.sync();
-
-        //Insertar Datos
-
-        await Precio.bulkCreate(precios);
-        console.log('Precios exportados Correctamente');
-        exit();
-
-    } catch (error) {
-        console.log(error);
-        exit(1);
-    }
-}
 
 //Recibir parametros desde la terminal y se manda a llamar datos
 if(process.argv[2] === "-i"){
     importarDatos();
-}
-if(process.argv[2] === "-p"){
-    importarPrecios();
-}
-    
+} 
