@@ -31,9 +31,21 @@ const importarDatos = async () =>{
     }
 }
 
+//Funcion para eliminar datos
 
+    const eliminarDatos = async () =>{
+        try {
+            await db.sync({force:true})
+        } catch (error) {
+            console.log(error)
+            exit(1)
+        }
+    }
 
 //Recibir parametros desde la terminal y se manda a llamar datos
 if(process.argv[2] === "-i"){
     importarDatos();
+} 
+if(process.argv[2] === "-e"){
+    eliminarDatos();
 } 
