@@ -1,13 +1,12 @@
 import { DataTypes } from "sequelize";
 import db from '../config/db.js';
-import 'Propiedad' 
 
 const Propiedad = db.define('Propiedades',{
     id:{
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-        primarKey: true
+        primaryKey: true
     },
     titulo:{
         type: DataTypes.STRING(100),
