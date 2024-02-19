@@ -65,6 +65,7 @@ if(!usuario.confirmado){
     //almacenar en un cookie
     return res.cookie('_token', token, {
         httpOnly: true,
+        // expires: 900
         //secure: true
     }).redirect('/mis-propiedades')
 

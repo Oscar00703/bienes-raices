@@ -1,4 +1,4 @@
-extends ../layout/index
+extends ../layout/admin
 
 block styles 
     link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
@@ -77,10 +77,11 @@ block contenido
                         #mapa.h-96
 
                         div 
-                            p.calle 
-                            input(type="hidden" name= "calle" id = "calle")
-                            input(type="hidden" name= "lat" id = "lat")
-                            input(type="hidden" name= "lng" id = "lng")
+                            p.calle= datos.calle ? datos.calle : ''
+
+                        input(type="hidden" name="calle" id="calle" value=datos.calle ? datos.calle : '')
+                        input(type="hidden" name="lat" id="lat" value=datos.lat ? datos.lat : '')
+                        input(type="hidden" name="lng" id="lng" value=datos.lng ? datos.lng : '')
 
                     input(class =" w-full py-3 bg-indigo-600 hover:bg-iondigo-700 rounded text-white font-bold uppercase cursor-pointer" type = "submit" value= 'Añadir Imagen')
                     

@@ -1,5 +1,6 @@
 // const express = require('express')
 import express from 'express'
+import bodyParser from 'body-parser'
 import csurf from 'csurf'
 import cookieParser from 'cookie-parser'
 import usuarioRoutes from './routes/usuarioRoutes.js'
@@ -9,6 +10,10 @@ import db from './config/db.js'
 //create app
 
 const app = express();
+
+// Configurar body-parser para analizar los datos de formularios HTML
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //habilitar lectura de datos de form
 
